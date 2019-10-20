@@ -4,16 +4,35 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using wwwGames.Models;
 
 namespace wwwGames.Controllers
 {
     [Authorize]
     public class TeamController : Controller
     {
-        public IActionResult Team(int id)
+        ContextDb db;
+
+        public TeamController(ContextDb context)
         {
-            ViewData["id"] = id;
-            return View();
+            db = context;
+        }
+
+        public IActionResult AllTeams()
+        {
+            return View(db.Teams.ToList());
+        }
+        public IActionResult Team(int? id)
+        {
+            if (id == null)
+            {
+                id = int.Parse(User.Identity.Name);
+            }
+
+            Team team= db.Teams.Include(t => t.Users).FirstOrDefault(t => t.Id == id);
+
+            return View(team);
         }
     }
 }

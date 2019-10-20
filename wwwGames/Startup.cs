@@ -104,8 +104,8 @@ namespace wwwGames
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "profile",
-                    template: "{controller}/{id}/{action}");
+                    name: "user",
+                    template: "{controller}/{id}/{action}/{teamId}");
             });
 
             app.UseMvc(routes =>

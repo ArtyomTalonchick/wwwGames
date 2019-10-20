@@ -9,5 +9,9 @@ namespace wwwGames.Models
         public string Password { get; set; }
 
         public string Scores { get; set; }
+
+
+        public int TeamId { get; set; }
+        public Team Team { get; set; }
     }
 }

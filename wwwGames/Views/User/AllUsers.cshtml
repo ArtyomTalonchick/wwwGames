@@ -1,0 +1,27 @@
+﻿@model IEnumerable<wwwGames.Models.User>
+
+@if (ViewBag.teamId != null)
+{
+    var parameters = new { id = ViewBag.teamId };
+    <button onclick="location.href='@Url.Action("Team", "Team", parameters)'">
+        команда
+    </button>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <td>ИМЯ</td>
+            <td>МЫЛО</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td><a asp-controller="User" asp-action="Card" asp-route-id="@user.Id">@user.Name</a></td>
+                <td>@user.Email</td>
+            </tr>
+        }
+    </tbody>
+</table>

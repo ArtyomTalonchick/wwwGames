@@ -5,11 +5,12 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - wwwGames</title>
+    <title>@ViewData["Title"]- wwwGames</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
+        <link type="text/css" rel="stylesheet" href="~/css/global.css" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -32,7 +33,9 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Profile" asp-action="Card">@Localizer["profile"]</a></li>
+                    <li><a asp-area="" asp-controller="User" asp-action="AllUsers">ВСЕ ПОЛЬЗОВАТЕЛИ</a></li>
+                    <li><a asp-area="" asp-controller="User" asp-action="Card">@Localizer["profile"]</a></li>
+                    <li><a asp-area="" asp-controller="Team" asp-action="AllTeams" style="margin-right:auto">КОМАНДЫ</a></li>
                     <li><a asp-area="" asp-controller="Team" asp-action="Team" style="margin-right:auto">@Localizer["team"]</a></li>
                     <li style="padding-top: 15px; padding-bottom: 15px;">
                         @await Html.PartialAsync("_SelectLanguagePartial")
@@ -46,7 +49,7 @@
     <partial name="_CookieConsentPartial" />
 
     <div class="container body-content" style="display: flex; flex-direction: column; min-height: 100%;">
-        <div style="flex: 1 0 auto;">
+        <div style="flex: 1 0 auto; display:flex; flex-direction: column">
             @RenderBody()
         </div>
         <hr />

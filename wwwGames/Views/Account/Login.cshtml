@@ -2,7 +2,7 @@
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IHtmlLocalizer<SharedResource> Localizer
 
-<div>
+<div class="on-center form">
     <h2>@Localizer["login.header"]</h2>
 
     <a asp-action="Register" asp-controller="Account">@Localizer["login.registration"]</a>
@@ -11,12 +11,12 @@
         <div class="validation" asp-validation-summary="ModelOnly" />
         <div>
             <div class="form-group">
-                <label asp-for="Email">@Localizer["login.label.email"]</label>
+                <label asp-for="Email">@Localizer["login.label.email"]</label><br />
                 <input type="text" asp-for="Email" />
                 <span asp-validation-for="Email" />
             </div>
             <div class="form-group">
-                <label asp-for="Password">@Localizer["login.label.password"]</label>
+                <label asp-for="Password">@Localizer["login.label.password"]</label><br />
                 <input asp-for="Password" />
                 <span asp-validation-for="Password" />
             </div>

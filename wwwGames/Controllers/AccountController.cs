@@ -31,7 +31,7 @@ namespace wwwGames.Controllers
                 User user = await db.Users.FirstOrDefaultAsync(u => u.Email == model.Email && u.Password == model.Password);
                 if (user != null)
                 {
-                    await Authenticate(model.Email); // аутентификация
+                    await Authenticate(user.Id.ToString()); // аутентификация
 
                     return RedirectToAction("Index", "Home");
                 }

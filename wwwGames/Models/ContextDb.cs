@@ -10,7 +10,7 @@ namespace wwwGames
     public class ContextDb : DbContext
     {
         public DbSet<User> Users { get; set; }
-        public DbSet<Team> Team { get; set; }
+        public DbSet<Team> Teams { get; set; }
 
         public ContextDb(DbContextOptions<ContextDb> options)
             : base(options)
