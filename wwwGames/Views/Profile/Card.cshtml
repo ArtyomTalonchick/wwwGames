@@ -1,7 +1,17 @@
-﻿@{
-    ViewData["Title"] = "Card";
-}
-<h2>@ViewData["Title"]</h2>
-<h3>id: @ViewData["id"]</h3>
+﻿@model IEnumerable<wwwGames.Models.User>
 
-<p>Use this area to provide profile card.</p>
+<table>
+    <tr>
+        <td>Имя</td>
+        <td>Мыло</td>
+        <td></td>
+    </tr>
+    @foreach (var user in Model)
+    {
+    <tr>
+        <td>@user.Name</td>
+        <td>@user.Email</td>
+        <a asp-controller="Profile" asp-action="Card" asp-route-id="@user.Name"></a>
+    </tr>
+    }
+</table>

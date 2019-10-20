@@ -18,7 +18,7 @@
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
 </head>
-<body>
+<body style="position:absolute; height: 100%; width:100%;">
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -31,12 +31,13 @@
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">wwwGames</a>
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav" >
+                <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Profile" asp-action="Card">@Localizer["profile"]</a></li>
                     <li><a asp-area="" asp-controller="Team" asp-action="Team" style="margin-right:auto">@Localizer["team"]</a></li>
                     <li style="padding-top: 15px; padding-bottom: 15px;">
                         @await Html.PartialAsync("_SelectLanguagePartial")
                     </li>
+                    <li><a asp-area="" asp-controller="Account" asp-action="Logout">@Localizer["logout"]</a></li>
                 </ul>
             </div>
         </div>
@@ -44,10 +45,12 @@
 
     <partial name="_CookieConsentPartial" />
 
-    <div class="container body-content">
-        @RenderBody()
+    <div class="container body-content" style="display: flex; flex-direction: column; min-height: 100%;">
+        <div style="flex: 1 0 auto;">
+            @RenderBody()
+        </div>
         <hr />
-        <footer>
+        <footer style="flex: 0 0 auto;">
             <p>&copy; 2019 - wwwGames</p>
         </footer>
     </div>

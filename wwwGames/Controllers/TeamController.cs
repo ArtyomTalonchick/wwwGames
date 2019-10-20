@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace wwwGames.Controllers
 {
+    [Authorize]
     public class TeamController : Controller
     {
         public IActionResult Team(int id)

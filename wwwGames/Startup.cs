@@ -1,13 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using wwwGames.Models;
 
 namespace wwwGames
 {
@@ -46,8 +49,25 @@ namespace wwwGames
                 options.SupportedCultures = supportedCultures;
                 options.SupportedUICultures = supportedCultures;
             });
+
+            updateBD(services);
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+               .AddCookie(options => //CookieAuthenticationOptions
+                {
+                   options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+               });
+
+            services.AddMvc();
         }
 
+
+        private void updateBD(IServiceCollection services)
+        {
+            string connection = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<ContextDb>(options => options.UseSqlServer(connection));
+            services.AddMvc();
+        }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
@@ -67,8 +87,9 @@ namespace wwwGames
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseAuthentication();
 
-            this.updateMVC(app);
+            updateMVC(app);
         }
 
         private void updateMVC(IApplicationBuilder app)
