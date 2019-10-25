@@ -23,15 +23,38 @@ namespace wwwGames.Controllers
         {
             return View(db.Teams.ToList());
         }
+
         public IActionResult Team(int? id)
         {
+            User user = db.Users.Find(int.Parse(User.Identity.Name));
             if (id == null)
             {
-                id = int.Parse(User.Identity.Name);
+                id = user.TeamId;
+            }
+            Team team = db.Teams.Include(t => t.Users).FirstOrDefault(t => t.Id == id);
+            Role teamLeadRole = db.Roles.FirstOrDefault(r => r.Name == "teamLead");
+            if (user.Role == teamLeadRole && id == user.TeamId)
+            {
+                return RedirectToAction("EditTeam", "Team", new { id });
             }
 
-            Team team= db.Teams.Include(t => t.Users).FirstOrDefault(t => t.Id == id);
+            return View(team);
+        }
 
+        [Authorize(Roles = "teamLead")]
+        public IActionResult EditTeam(int? id)
+        {
+            User user = db.Users.Find(int.Parse(User.Identity.Name));
+            if (id == null)
+            {
+                id = user.TeamId;
+            }
+            if (id != user.TeamId)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+
+            Team team = db.Teams.Include(t => t.Users).FirstOrDefault(t => t.Id == id);
             return View(team);
         }
     }

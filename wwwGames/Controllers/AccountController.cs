@@ -28,10 +28,10 @@ namespace wwwGames.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = await db.Users.FirstOrDefaultAsync(u => u.Email == model.Email && u.Password == model.Password);
+                User user = await db.Users.Include(u => u.Team).Include(u => u.Role).FirstOrDefaultAsync(u => u.Email == model.Email && u.Password == model.Password);
                 if (user != null)
                 {
-                    await Authenticate(user.Id.ToString()); // аутентификация
+                    await Authenticate(user); // аутентификация
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -50,14 +50,21 @@ namespace wwwGames.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = await db.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
-                if (user == null)
+                //InvitationCode invitationCode = await db.InvitationCodes.FirstOrDefaultAsync(c => c.Code == model.Code);
+                User duplicationUser = await db.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+                //if (duplicationUser == null && invitationCode != null)
+                if (duplicationUser == null)
                 {
-                    // добавляем пользователя в бд
-                    db.Users.Add(new User { Name = model.Name, Email = model.Email, Password = model.Password });
+                    // добавляем пользователя в бд      
+                    Team team= await db.Teams.FirstOrDefaultAsync(t => t.Id == 1);
+                    User user = new User { Name = model.Name, Email = model.Email, Password = model.Password, Team = team };
+                    Role userRole = await db.Roles.FirstOrDefaultAsync(r => r.Name == "player");
+                    if (userRole != null)
+                        user.Role = userRole;
+                    db.Users.Add(user);
                     await db.SaveChangesAsync();
 
-                    await Authenticate(model.Email); // аутентификация
+                    await Authenticate(user); // аутентификация
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -67,12 +74,13 @@ namespace wwwGames.Controllers
             return View(model);
         }
 
-        private async Task Authenticate(string userName)
+        private async Task Authenticate(User user)
         {
             // создаем один claim
             var claims = new List<Claim>
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, userName)
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Id.ToString()),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role?.Name)
             };
             // создаем объект ClaimsIdentity
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);

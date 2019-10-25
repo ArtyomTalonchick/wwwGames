@@ -23,6 +23,9 @@
     <Content Update="Views\Account\Login.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\Team\EditTeam.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\User\Edit.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

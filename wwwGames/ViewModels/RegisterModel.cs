@@ -4,6 +4,9 @@ namespace wwwGames.ViewModels
 {
     public class RegisterModel
     {
+        [Required(ErrorMessage = "Не указано код")]
+        public string Code { get; set; }
+
         [Required(ErrorMessage = "Не указано имя")]
         public string Name { get; set; }
 
