@@ -1,0 +1,16 @@
+﻿<div class="on-center card">
+    <a asp-controller="Team" asp-action="Team" asp-route-id="@Model.Id" style="text-decoration:none">
+        <img src="http://itd3.mycdn.me/image?id=870833799678&t=20&plc=WEB&tkn=*k-3-HsUx3lQEvaOG17U1VFWCM6w" style="width:50px">
+        <div>
+            <span id="team-name" class="large"></span>
+        </div>
+    </a>
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#team-name').load('@Url.Action("GetName", "Team")?id='+@Model.Id)
+    });
+</script>

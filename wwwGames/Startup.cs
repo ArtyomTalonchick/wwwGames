@@ -114,6 +114,13 @@ namespace wwwGames
                     name: "team",
                     template: "{controller}/{id}/{action}");
             });
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "InvitationCode",
+                    template: "{controller}/{code}/{action}/{teamId}");
+            });
         }
 
     }

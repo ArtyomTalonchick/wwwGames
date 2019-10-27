@@ -16,11 +16,15 @@ namespace wwwGames.Controllers
     public class UserController : Controller
     {
         ContextDb db;
-        private int id;
 
         public UserController(ContextDb context)
         {
             db = context;
+        }
+
+        public ActionResult CardInfo()
+        {
+            return PartialView("CardInfo");
         }
 
         public IActionResult AllUsers(int? teamId)

@@ -1,0 +1,98 @@
+﻿<table class="table" style="width:auto">
+    <thead>
+        <tr>
+            <td>КОД</td>
+            <td>УДАЛИТЬ</td>
+        </tr>
+        <tr>
+            <td>
+                <input type="text" id="add-input" />
+            </td>
+            <td>
+                <button id="add-button">ДОБАВИТЬ</button>
+            </td>
+        </tr>
+    </thead>
+    <tbody id="table-body">
+        @{var allCodes = new List<InvitationCode>();}
+        @foreach (var code in allCodes)
+        {
+            <tr id="tr-example">
+                <td>@code</td>
+                <td style="text-align:center">
+                    <button id=@code>
+                        <i class="fas fa-times"></i>
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script type="text/javascript">
+
+    let codes;
+
+    updateCodes = () =>
+        $.ajax({
+            cache: false,
+            url: '@Url.Action("All", "InvitationCode")',
+            type: 'GET',
+            data: { teamId: @Model.Id },
+            success: (result) => {
+                codes = result;
+            }
+        });
+
+
+    updateTable = () => {
+        updateCodes()
+            .then(()=> {
+                $('#add-input').val('')
+                const tableBode = $('#table-body');
+                tableBode.html('');
+                codes.forEach(item => {
+                    tableBode.append(`<tr id="tr-example">
+                        <td>${item.code}</td>
+                        <td style="text-align:center">
+                            <button onclick="onRemove(${item.id})">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </td>
+                    </tr>`)
+                })
+            })
+    }
+
+    onCreate = () => {
+        let code = $('#add-input').val();
+        $.ajax({
+            cache: false,
+            url: '@Url.Action("Create", "InvitationCode")',
+            type: 'POST',
+            data: { teamId: @Model.Id, code },
+            success: () => {
+                updateTable();
+            }
+        });
+    }
+
+    onRemove = (id) => {
+        $.ajax({
+            cache: false,
+            url: '@Url.Action("Remove", "InvitationCode")',
+            type: 'GET',
+            data: { id },
+            success: () => {
+                updateTable();
+            }
+        });
+    }
+
+
+    $(document).ready(() => {
+        updateTable();
+        $('#add-button').click(onCreate)
+    });
+</script>
+

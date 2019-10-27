@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +14,17 @@ namespace wwwGames.Controllers
         public TeamController(ContextDb context)
         {
             db = context;
+        }
+
+        public ActionResult TeamInfo()
+        {
+            return PartialView("TeamInfo");
+        }
+
+        public string GetName(int id)
+        {
+            Team team = db.Teams.FirstOrDefault(t => t.Id == id);
+            return team.Name;
         }
 
         public IActionResult AllTeams()
@@ -56,6 +64,18 @@ namespace wwwGames.Controllers
 
             Team team = db.Teams.Include(t => t.Users).FirstOrDefault(t => t.Id == id);
             return View(team);
+        }
+
+        [Authorize(Roles = "teamLead")]
+        public ActionResult UsersTable()
+        {
+            return PartialView("UsersTable");
+        }
+
+        [Authorize(Roles = "teamLead")]
+        public ActionResult CodesTable()
+        {
+            return PartialView("CodesTable");
         }
     }
 }

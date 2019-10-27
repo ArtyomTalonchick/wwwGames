@@ -2,10 +2,8 @@
 
 @if (ViewBag.teamId != null)
 {
-    var parameters = new { id = ViewBag.teamId };
-    <button onclick="location.href='@Url.Action("Team", "Team", parameters)'">
-        КОМАНДА
-    </button>
+    var parameters = new Team{ Id = ViewBag.teamId };
+    @Html.Partial("~/Views/Team/TeamInfo.cshtml", parameters)
 }
 
 <table class="table">
