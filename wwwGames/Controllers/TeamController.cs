@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -21,49 +22,50 @@ namespace wwwGames.Controllers
             return PartialView("TeamInfo");
         }
 
+        [HttpGet]
+        public ICollection<Team> GetAllTeams()
+        {
+            return db.Teams.ToList();
+        }
+
+        [HttpGet]
+        public Team GetTeam(int? teamId)
+        {
+            User user = db.Users.Find(int.Parse(User.Identity.Name));
+            if (teamId == null)
+            {
+                teamId = user.TeamId;
+            }
+            Team team = db.Teams.Include(t => t.Users).FirstOrDefault(t => t.Id == teamId);
+            return team;
+        }
+
         public string GetName(int id)
         {
-            Team team = db.Teams.FirstOrDefault(t => t.Id == id);
-            return team.Name;
+            return GetTeam(id).Name;
         }
 
         public IActionResult AllTeams()
         {
-            return View(db.Teams.ToList());
+            return View(GetAllTeams());
         }
 
         public IActionResult Team(int? id)
         {
             User user = db.Users.Find(int.Parse(User.Identity.Name));
-            if (id == null)
-            {
-                id = user.TeamId;
-            }
-            Team team = db.Teams.Include(t => t.Users).FirstOrDefault(t => t.Id == id);
             Role teamLeadRole = db.Roles.FirstOrDefault(r => r.Name == "teamLead");
-            if (user.Role == teamLeadRole && id == user.TeamId)
+            if (user.Role == teamLeadRole && (id == null || id == user.TeamId))
             {
-                return RedirectToAction("EditTeam", "Team", new { id });
+                return RedirectToAction("EditTeam", "Team");
             }
 
-            return View(team);
+            return View(GetTeam(id));
         }
 
         [Authorize(Roles = "teamLead")]
-        public IActionResult EditTeam(int? id)
+        public IActionResult EditTeam()
         {
-            User user = db.Users.Find(int.Parse(User.Identity.Name));
-            if (id == null)
-            {
-                id = user.TeamId;
-            }
-            if (id != user.TeamId)
-            {
-                return RedirectToAction("Error", "Home");
-            }
-
-            Team team = db.Teams.Include(t => t.Users).FirstOrDefault(t => t.Id == id);
-            return View(team);
+            return View(GetTeam(null));
         }
 
         [Authorize(Roles = "teamLead")]

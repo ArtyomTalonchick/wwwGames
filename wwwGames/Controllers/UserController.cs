@@ -22,12 +22,8 @@ namespace wwwGames.Controllers
             db = context;
         }
 
-        public ActionResult CardInfo()
-        {
-            return PartialView("CardInfo");
-        }
-
-        public IActionResult AllUsers(int? teamId)
+        [HttpGet]
+        public ICollection<User> GetAllUsers(int? teamId)
         {
             ICollection<User> users;
             if (teamId == null)
@@ -38,26 +34,44 @@ namespace wwwGames.Controllers
             {
                 users = db.Teams.Include(t => t.Users).FirstOrDefault(t => t.Id == teamId).Users;
             }
-            ViewBag.teamId = teamId;
-            return View(users);
+            foreach(var user in users)
+            {
+                user.Team = null;
+            }
+            return users;
         }
 
-        public IActionResult Card(int? id)
+        [HttpGet]
+        public User GetUser(int? userId)
         {
-            if (id == null)
+            if (userId == null)
             {
-                id = int.Parse(User.Identity.Name);
+                userId = int.Parse(User.Identity.Name);
             }
-            User user = db.Users.Find(id);
+            User user = db.Users.Find(userId);
+            return user;
+        }
 
-            return View(user);
+        public ActionResult CardInfo()
+        {
+            return PartialView("CardInfo");
+        }
+
+        public IActionResult AllUsers(int? teamId)
+        {
+            ViewBag.teamId = teamId;
+            return View(GetAllUsers(teamId));
+        }
+
+        public IActionResult Card(int? userId)
+        {
+            return View(GetUser(userId));
         }
 
         [HttpGet]
         public IActionResult Edit()
         {
-            int id = int.Parse(User.Identity.Name);
-            User user = db.Users.Find(id);
+            User user = GetUser(null);
             UserModel model = new UserModel { Name = user.Name, Email = user.Email, Password = user.Password };
             return View(model);
         }
@@ -68,8 +82,7 @@ namespace wwwGames.Controllers
         {
             if (ModelState.IsValid)
             {
-                int id = int.Parse(User.Identity.Name);
-                User user = db.Users.Find(id);
+                User user = GetUser(null);
                 if (user != null)
                 {
                     user.Name = model.Name;

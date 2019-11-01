@@ -50,13 +50,13 @@ namespace wwwGames.Controllers
         {
             if (ModelState.IsValid)
             {
-                //InvitationCode invitationCode = await db.InvitationCodes.FirstOrDefaultAsync(c => c.Code == model.Code);
+                InvitationCode invitationCode = await db.InvitationCodes.FirstOrDefaultAsync(c => c.Code == model.Code);
+                db.InvitationCodes.Remove(invitationCode);
                 User duplicationUser = await db.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
-                //if (duplicationUser == null && invitationCode != null)
-                if (duplicationUser == null)
+                if (duplicationUser == null && invitationCode != null)
                 {
                     // добавляем пользователя в бд      
-                    Team team= await db.Teams.FirstOrDefaultAsync(t => t.Id == 1);
+                    Team team= await db.Teams.FirstOrDefaultAsync(t => t.Id == invitationCode.TeamId);
                     User user = new User { Name = model.Name, Email = model.Email, Password = model.Password, Team = team };
                     Role userRole = await db.Roles.FirstOrDefaultAsync(r => r.Name == "player");
                     if (userRole != null)

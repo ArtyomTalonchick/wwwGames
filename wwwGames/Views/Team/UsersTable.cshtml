@@ -1,1 +1,45 @@
-﻿
+﻿<table class="table" style="width:auto">
+    <thead>
+        <tr>
+            <td>КОД</td>
+        </tr>
+    </thead>
+    <tbody id="users-table-body">
+       
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    class userTable {
+        static users;
+
+        static updateUsers= () =>
+        $.ajax({
+            cache: false,
+            url: '@Url.Action("GetAllUsers", "User")',
+            type: 'GET',
+            data: { teamId: @Model.Id },
+            success: (result) => {
+                userTable.users = result;
+            }
+        });
+
+
+        static updateTable = () => {
+            userTable.updateUsers()
+                .then(()=> {
+                    const tableBode = $('#users-table-body');
+                    tableBode.html('');
+                    userTable.users.forEach(item => {
+                        tableBode.append(`<tr id="tr-example">
+                            <td>${item.name}</td>
+                        </tr>`)
+                    })
+                })
+        }
+    }
+    
+    $(document).ready(() => {
+        userTable.updateTable();
+    });
+</script>
