@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<wwwGames.Models.User>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> Localizer
 
 @if (ViewBag.teamId != null)
 {
@@ -8,8 +10,8 @@
 <table class="table">
     <thead>
         <tr>
-            <td>ИМЯ</td>
-            <td>МЫЛО</td>
+            <td>@Localizer["user.allUsers.name"]</td>
+            <td>@Localizer["user.allUsers.email"]</td>
         </tr>
     </thead>
     <tbody>

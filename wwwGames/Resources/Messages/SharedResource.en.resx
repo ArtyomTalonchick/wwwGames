@@ -117,48 +117,106 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="login.header" xml:space="preserve">
+  <data name="account.login.header" xml:space="preserve">
     <value>Enter the site</value>
   </data>
-  <data name="login.input" xml:space="preserve">
+  <data name="account.login.input" xml:space="preserve">
     <value>Enter</value>
   </data>
-  <data name="login.label.email" xml:space="preserve">
+  <data name="account.login.label.email" xml:space="preserve">
     <value>Email</value>
   </data>
-  <data name="login.label.password" xml:space="preserve">
+  <data name="account.login.label.password" xml:space="preserve">
     <value>Password</value>
   </data>
-  <data name="login.registration" xml:space="preserve">
+  <data name="account.login.registration" xml:space="preserve">
     <value>Registration</value>
   </data>
-  <data name="logout" xml:space="preserve">
-    <value>Logout</value>
-  </data>
-  <data name="profile" xml:space="preserve">
-    <value>Profile</value>
-    <comment>header</comment>
-  </data>
-  <data name="registration.header" xml:space="preserve">
+  <data name="account.register.header" xml:space="preserve">
     <value>Registration</value>
   </data>
-  <data name="registration.input" xml:space="preserve">
+  <data name="account.register.input" xml:space="preserve">
     <value>To register</value>
   </data>
-  <data name="registration.label.email" xml:space="preserve">
+  <data name="account.register.label.email" xml:space="preserve">
     <value>Email</value>
   </data>
-  <data name="registration.label.name" xml:space="preserve">
+  <data name="account.register.label.invitationCode" xml:space="preserve">
+    <value>Invitation code</value>
+  </data>
+  <data name="account.register.label.name" xml:space="preserve">
     <value>Name</value>
   </data>
-  <data name="registration.label.password1" xml:space="preserve">
+  <data name="account.register.label.password1" xml:space="preserve">
     <value>Password</value>
   </data>
-  <data name="registration.label.password2" xml:space="preserve">
+  <data name="account.register.label.password2" xml:space="preserve">
     <value>Confirm password</value>
   </data>
-  <data name="team" xml:space="preserve">
+  <data name="header.allTeams" xml:space="preserve">
+    <value>All Teams</value>
+  </data>
+  <data name="header.allUsers" xml:space="preserve">
+    <value>All Users</value>
+  </data>
+  <data name="header.game" xml:space="preserve">
+    <value>Game</value>
+  </data>
+  <data name="header.logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="header.team" xml:space="preserve">
     <value>Team</value>
-    <comment>header</comment>
+  </data>
+  <data name="header.user" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="team.allTeams.name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="team.codesTable.add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="team.codesTable.code" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="team.codesTable.delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="team.editTeam.header" xml:space="preserve">
+    <value>My Team</value>
+  </data>
+  <data name="team.editTeam.lookMore" xml:space="preserve">
+    <value>Look More</value>
+  </data>
+  <data name="team.team.card" xml:space="preserve">
+    <value>Card</value>
+  </data>
+  <data name="team.team.lookMore" xml:space="preserve">
+    <value>LookMore</value>
+  </data>
+  <data name="team.usersTable.name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="user.allUsers.email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="user.allUsers.name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="user.card.card" xml:space="preserve">
+    <value>Card</value>
+  </data>
+  <data name="user.card.change" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="user.card.team" xml:space="preserve">
+    <value>Team</value>
+  </data>
+  <data name="user.edit.header" xml:space="preserve">
+    <value>Change Profile</value>
+  </data>
+  <data name="user.edit.save" xml:space="preserve">
+    <value>Save</value>
   </data>
 </root>

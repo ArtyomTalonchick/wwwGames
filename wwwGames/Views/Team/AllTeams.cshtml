@@ -1,9 +1,11 @@
 ﻿@model IEnumerable<wwwGames.Models.Team>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> Localizer
 
 <table class="table">
     <thead>
         <tr>
-            <td>ИМЯ</td>
+            <td>@Localizer["team.allTeams.name"]</td>
         </tr>
     </thead>
     <tbody>

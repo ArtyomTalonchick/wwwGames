@@ -1,0 +1,19 @@
+﻿@model IEnumerable<wwwGames.Models.Game>
+
+<table class="table">
+    <thead>
+        <tr>
+            <td>ИГРА</td>
+            <td>ПРОТИВНИК</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var game in Model)
+        {
+            <tr>
+                <td>@game.GameName</td>
+                <td>@game.TeamId1</td>
+            </tr>
+        }
+    </tbody>
+</table>

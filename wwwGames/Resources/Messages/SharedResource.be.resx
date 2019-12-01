@@ -117,48 +117,106 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="login.header" xml:space="preserve">
-    <value>Вход на сайт</value>
+  <data name="account.login.header" xml:space="preserve">
+    <value>Уваход на сайт</value>
   </data>
-  <data name="login.input" xml:space="preserve">
-    <value>Войти</value>
+  <data name="account.login.input" xml:space="preserve">
+    <value>Увайсці</value>
   </data>
-  <data name="login.label.email" xml:space="preserve">
+  <data name="account.login.label.email" xml:space="preserve">
     <value>Email</value>
   </data>
-  <data name="login.label.password" xml:space="preserve">
+  <data name="account.login.label.password" xml:space="preserve">
     <value>Пароль</value>
   </data>
-  <data name="login.registration" xml:space="preserve">
-    <value>Зарегистрироваться</value>
+  <data name="account.login.registration" xml:space="preserve">
+    <value>Зарэгістравацца</value>
   </data>
-  <data name="logout" xml:space="preserve">
-    <value>Выйти</value>
+  <data name="account.register.header" xml:space="preserve">
+    <value>Рэгістрацыя</value>
   </data>
-  <data name="profile" xml:space="preserve">
-    <value>Профиль</value>
-    <comment>header</comment>
+  <data name="account.register.input" xml:space="preserve">
+    <value>Зарэгістравацца</value>
   </data>
-  <data name="registration.header" xml:space="preserve">
-    <value>Регистрация</value>
-  </data>
-  <data name="registration.input" xml:space="preserve">
-    <value>Зарегистрироваться</value>
-  </data>
-  <data name="registration.label.email" xml:space="preserve">
+  <data name="account.register.label.email" xml:space="preserve">
     <value>Email</value>
   </data>
-  <data name="registration.label.name" xml:space="preserve">
+  <data name="account.register.label.invitationCode" xml:space="preserve">
+    <value>Код запрашэння</value>
+  </data>
+  <data name="account.register.label.name" xml:space="preserve">
+    <value>Імя</value>
+  </data>
+  <data name="account.register.label.password1" xml:space="preserve">
+    <value>Пароль</value>
+  </data>
+  <data name="account.register.label.password2" xml:space="preserve">
+    <value>Паўтарыце Пароль</value>
+  </data>
+  <data name="header.allTeams" xml:space="preserve">
+    <value>Усе Каманды</value>
+  </data>
+  <data name="header.allUsers" xml:space="preserve">
+    <value>Усе Карыстальнікі</value>
+  </data>
+  <data name="header.game" xml:space="preserve">
+    <value>Гульня</value>
+  </data>
+  <data name="header.logout" xml:space="preserve">
+    <value>Выйсці</value>
+  </data>
+  <data name="header.team" xml:space="preserve">
+    <value>Каманда</value>
+  </data>
+  <data name="header.user" xml:space="preserve">
+    <value>Профіль</value>
+  </data>
+  <data name="team.allTeams.name" xml:space="preserve">
     <value>Имя</value>
   </data>
-  <data name="registration.label.password1" xml:space="preserve">
-    <value>Пароль</value>
+  <data name="team.codesTable.add" xml:space="preserve">
+    <value>Дадаць</value>
   </data>
-  <data name="registration.label.password2" xml:space="preserve">
-    <value>Повторите пароль</value>
+  <data name="team.codesTable.code" xml:space="preserve">
+    <value>Код</value>
   </data>
-  <data name="team" xml:space="preserve">
-    <value>Команда</value>
-    <comment>header</comment>
+  <data name="team.codesTable.delete" xml:space="preserve">
+    <value>Выдаліць</value>
+  </data>
+  <data name="team.editTeam.header" xml:space="preserve">
+    <value>Мая Каманда</value>
+  </data>
+  <data name="team.editTeam.lookMore" xml:space="preserve">
+    <value>Прагледзець</value>
+  </data>
+  <data name="team.team.card" xml:space="preserve">
+    <value>Картка</value>
+  </data>
+  <data name="team.team.lookMore" xml:space="preserve">
+    <value>Прагледзець</value>
+  </data>
+  <data name="team.usersTable.name" xml:space="preserve">
+    <value>Имя</value>
+  </data>
+  <data name="user.allUsers.email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="user.allUsers.name" xml:space="preserve">
+    <value>Имя</value>
+  </data>
+  <data name="user.card.card" xml:space="preserve">
+    <value>Картка</value>
+  </data>
+  <data name="user.card.change" xml:space="preserve">
+    <value>Змяніць</value>
+  </data>
+  <data name="user.card.team" xml:space="preserve">
+    <value>Каманда</value>
+  </data>
+  <data name="user.edit.header" xml:space="preserve">
+    <value>Змяніць профіль</value>
+  </data>
+  <data name="user.edit.save" xml:space="preserve">
+    <value>Захаваць</value>
   </data>
 </root>

@@ -37,14 +37,15 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="User" asp-action="AllUsers">ВСЕ ПОЛЬЗОВАТЕЛИ</a></li>
-                    <li><a asp-area="" asp-controller="User" asp-action="Card">@Localizer["profile"]</a></li>
-                    <li><a asp-area="" asp-controller="Team" asp-action="AllTeams" style="margin-right:auto">КОМАНДЫ</a></li>
-                    <li><a asp-area="" asp-controller="Team" asp-action="Team" style="margin-right:auto">@Localizer["team"]</a></li>
+                    <li><a asp-area="" asp-controller="User" asp-action="AllUsers">@Localizer["header.allUsers"]</a></li>
+                    <li><a asp-area="" asp-controller="User" asp-action="Card">@Localizer["header.user"]</a></li>
+                    <li><a asp-area="" asp-controller="Team" asp-action="AllTeams">@Localizer["header.allTeams"]</a></li>
+                    <li><a asp-area="" asp-controller="Team" asp-action="Team" style="margin-right:auto">@Localizer["header.team"]</a></li>
+                    <li><a asp-area="" asp-controller="Game" asp-action="List">@Localizer["header.game"]</a></li>
                     <li style="padding-top: 15px; padding-bottom: 15px;">
                         @await Html.PartialAsync("_SelectLanguagePartial")
                     </li>
-                    <li><a asp-area="" asp-controller="Account" asp-action="Logout">@Localizer["logout"]</a></li>
+                    <li><a asp-area="" asp-controller="Account" asp-action="Logout">@Localizer["header.logout"]</a></li>
                 </ul>
             </div>
         </div>

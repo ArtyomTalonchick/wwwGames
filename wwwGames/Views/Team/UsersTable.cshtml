@@ -1,12 +1,13 @@
-﻿<table class="table" style="width:auto">
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> Localizer
+
+<table class="table" style="width:auto">
     <thead>
         <tr>
-            <td>КОД</td>
+            <td>@Localizer["team.usersTable.name"]</td>
         </tr>
     </thead>
-    <tbody id="users-table-body">
-       
-    </tbody>
+    <tbody id="users-table-body"></tbody>
 </table>
 
 <script type="text/javascript">
@@ -32,13 +33,13 @@
                     tableBode.html('');
                     userTable.users.forEach(item => {
                         tableBode.append(`<tr id="tr-example">
-                            <td>${item.name}</td>
+                            <td><a href="/User/Card?userId=${item.id}">${item.name}</a></td>
                         </tr>`)
                     })
                 })
         }
     }
-    
+
     $(document).ready(() => {
         userTable.updateTable();
     });

@@ -10,7 +10,7 @@ namespace wwwGames.Models
         public int TeamId2 { get; set; }
         
         public int GameNameId { get; set; }
-        public Role GameName { get; set; }
+        public GameName GameName { get; set; }
     }
 
     public class GameName

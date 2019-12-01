@@ -1,20 +1,22 @@
-﻿<table class="table" style="width:auto">
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> Localizer
+
+<table class="table" style="width:auto">
     <thead>
         <tr>
-            <td>КОД</td>
-            <td>УДАЛИТЬ</td>
+            <td>@Localizer["team.codesTable.code"]</td>
+            <td>@Localizer["team.codesTable.delete"]</td>
         </tr>
         <tr>
             <td>
                 <input type="text" id="codes-table-add-input" />
             </td>
             <td>
-                <button id="codes-table-add-button">ДОБАВИТЬ</button>
+                <button id="codes-table-add-button">@Localizer["team.codesTable.add"]</button>
             </td>
         </tr>
     </thead>
-    <tbody id="codes-table-body">
-    </tbody>
+    <tbody id="codes-table-body"></tbody>
 </table>
 
 <script type="text/javascript">

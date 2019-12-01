@@ -24,6 +24,12 @@
     <Content Update="Views\Account\Login.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\Game\Room.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Game\List.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Team\TeamInfo.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
@@ -48,10 +54,6 @@
     <Content Update="Views\User\CardInfo.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\PlayingField\" />
   </ItemGroup>
 
 </Project>
