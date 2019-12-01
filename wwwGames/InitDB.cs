@@ -57,6 +57,14 @@ namespace wwwGames
                         Team = team2
                     }
                 );
+
+                context.GameNames.AddRange(
+                    new GameName
+                    {
+                        Name = "Bulls and cows"
+                    }
+                );
+
                 context.SaveChanges();
             }
         }

@@ -32,7 +32,7 @@
                     const tableBode = $('#users-table-body');
                     tableBode.html('');
                     userTable.users.forEach(item => {
-                        tableBode.append(`<tr id="tr-example">
+                        tableBode.append(`<tr>
                             <td><a href="/User/Card?userId=${item.id}">${item.name}</a></td>
                         </tr>`)
                     })

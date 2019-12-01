@@ -14,6 +14,7 @@ namespace wwwGames
         public DbSet<Team> Teams { get; set; }
         public DbSet<InvitationCode> InvitationCodes { get; set; }
         public DbSet<Game> Games { get; set; }
+        public DbSet<GameName> GameNames { get; set; }
 
         public ContextDb(DbContextOptions<ContextDb> options)
             : base(options)

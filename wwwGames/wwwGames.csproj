@@ -24,6 +24,9 @@
     <Content Update="Views\Account\Login.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\Game\Create.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Game\Room.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

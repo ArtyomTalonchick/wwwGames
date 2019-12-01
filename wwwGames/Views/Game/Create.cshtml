@@ -1,0 +1,86 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> Localizer
+
+<tr>
+    <td>
+        <select id="game-create-team-select" />
+    </td>
+    <td>
+        <select id="game-create-game-select" />
+    </td>
+    <td>
+        <button id="game-create-submit-button">@Localizer["game.create.create"]</button>
+    </td>
+</tr>
+
+<script type="text/javascript">
+    class gameCreate {
+
+        static updateTeams = () =>
+            $.ajax({
+                cache: false,
+                url: '@Url.Action("GetAllTeams", "Team")',
+                type: 'GET',
+                data: {},
+                success: result => gameCreate.teams = result
+            });
+
+        static updateSelectTeam = () => 
+            gameCreate.updateTeams()
+                .then(() => {
+                    const selectElem = $('#game-create-team-select');
+                    selectElem.html('');
+                    gameCreate.teams.forEach(item => {
+                        selectElem.append(`<option value="${item.id}">${item.name}</option>`)
+                    })
+                })
+        
+
+        static updateGames= () =>
+            $.ajax({
+                cache: false,
+                url: '@Url.Action("GetAllGameNames", "Game")',
+                type: 'GET',
+                data: {},
+                success: result => gameCreate.games = result
+            });
+
+        static updateSelectGame= () => 
+            gameCreate.updateGames()
+                .then(() => {
+                    const selectElem = $('#game-create-game-select');
+                    selectElem.html('');
+                    gameCreate.games.forEach(item => {
+                        selectElem.append(`<option value="${item.id}">${item.name}</option>`)
+                    })
+                })
+        
+
+        static onCreate = () => {
+            let e = document.getElementById('game-create-team-select');
+            const teamId = e.options[e.selectedIndex].value;
+            e = document.getElementById('game-create-game-select');
+            const gameNameId = e.options[e.selectedIndex].value;
+            $.ajax({
+                cache: false,
+                url: '@Url.Action("Create", "Game")',
+                type: 'POST',
+                data: { teamId, gameNameId },
+                success: () => {
+                    if (gameList && gameList.updateTable) {
+                        gameList.updateTable();
+                    }
+                }
+            });
+
+        }
+
+    }
+
+    $().ready(() => {
+        $('#game-create-submit-button').click(gameCreate.onCreate);
+        gameCreate.updateSelectTeam();
+        gameCreate.updateSelectGame();
+    });
+
+</script>

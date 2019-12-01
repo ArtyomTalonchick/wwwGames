@@ -1,19 +1,62 @@
 ﻿@model IEnumerable<wwwGames.Models.Game>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> Localizer
 
 <table class="table">
     <thead>
         <tr>
-            <td>ИГРА</td>
-            <td>ПРОТИВНИК</td>
+            <td>@Localizer["game.list.game"]</td>
+            <td>@Localizer["game.list.team"]</td>
+            <td>@Localizer["game.list.action"]</td>
         </tr>
-    </thead>
-    <tbody>
-        @foreach (var game in Model)
+        @if (ViewBag.isTeamLead)
         {
-            <tr>
-                <td>@game.GameName</td>
-                <td>@game.TeamId1</td>
-            </tr>
+            await Html.RenderPartialAsync("Create");
         }
-    </tbody>
+    </thead>
+    <tbody id="game-list-table"/>
 </table>
+
+
+<script type="text/javascript">
+    class gameList {
+
+        static updateGames= () =>
+            $.ajax({
+                cache: false,
+                url: '@Url.Action("GetForUser", "Game")',
+                type: 'GET',
+                data: {},
+                success: result => gameList.games = result
+            });
+
+        static updateTable = () => 
+            gameList.updateGames()
+                .then(() => {
+                    const table = $('#game-list-table');
+                    table.html('');
+                    gameList.games.forEach(item =>
+                        table.append(`<tr>
+                            <td><a href="/Game/Room/${item.id}">${item.gameName.name}</a></td>
+                            <td><a href="/Team/Team/${item.team2Id}">${item.team2Id}</a></td>
+                            <td><button onClick="gameList.onRemove(${item.id})">@Localizer["game.list.game"]</button></td>
+                        </tr>`)
+                    );
+                })
+        
+
+        static onRemove = gameId => 
+            $.ajax({
+                cache: false,
+                url: '@Url.Action("Remove", "Game")',
+                type: 'PUT',
+                data: { id: gameId},
+                success: () => gameList.updateTable()
+            });
+    }
+
+    $().ready(() => {
+        gameList.updateTable();
+    });
+
+</script>

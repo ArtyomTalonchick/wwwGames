@@ -38,11 +38,11 @@
         static updateTable = () => {
             codesTable.updateCodes()
                 .then(() => {
-                    $('#codes-table-add-input').val('')
+                    $('#codes-table-add-input').val('');
                     const tableBode = $('#codes-table-body');
                     tableBode.html('');
                     codesTable.codes.forEach(item => {
-                        tableBode.append(`<tr id="tr-example">
+                        tableBode.append(`<tr>
                             <td>${item.code}</td>
                             <td style="text-align:center">
                                 <button onclick="codesTable.onRemove(${item.id})">
@@ -82,6 +82,6 @@
 
     $(document).ready(() => {
         codesTable.updateTable();
-        $('#codes-table-add-button').click(codesTable.onCreate)
+        $('#codes-table-add-button').click(codesTable.onCreate);
     });
 </script>
