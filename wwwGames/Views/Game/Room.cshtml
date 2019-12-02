@@ -1,3 +1,130 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> Localizer
+
+<div class="game-room1-discription">
+    @Localizer["game.room1.discription"]
+</div>
+<div class="game-room1-container">
+
+    <table class="game-room1-table">
+        <thead>
+            <tr>
+                <td>@Localizer["game.room1."]</td>
+                <td>@Localizer["game.room1."]</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>32432</td>
+                <td>efdsfds</td>
+            </tr>
+            <tr>
+                <td>32432</td>
+                <td>efdsfds</td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <div id="game-room1-active-block-1">
+        <div class="game-room1-move-1">@Localizer["game.room1.move1"]</div>
+        <input type="text" maxlength="4" placeholder="@Localizer["game.room1.input"]" />
+        <button>@Localizer["game.room1.submit"]</button>
+    </div>
+    <div id="game-room1-active-block-2" class="game-room1-move-2">
+        @Localizer["game.room1.move2"]
+    </div>
+    <div id="game-room1-active-block-3" class="game-room1-move-3">
+        @Localizer["game.room1.move3"]
+    </div>
+
+</div>
+
+
+<script type="text/javascript">
+    class gameRoom1{
+
+        static updateGameId = () => {
+            const url_string = window.location.href;
+            const url = new URL(url_string);
+            gameRoom1.GameId = url.searchParams.get('id');
+        }
+
+        static addPlayer = () =>
+             $.ajax({
+                cache: false,
+                url: '@Url.Action("AddPlayer", "Game")',
+                type: 'PUT',
+                data: { gameId: gameRoom1.GameId }
+            });
+
+        static removePlayer = () =>
+             $.ajax({
+                cache: false,
+                url: '@Url.Action("RemovePlayer", "Game")',
+                type: 'PUT',
+                data: { gameId: gameRoom1.GameId }
+            });
+
+        static updateCurrenrPlayer = () =>
+             $.ajax({
+                cache: false,
+                url: '@Url.Action("GetCurrentPlayer", "Game")',
+                type: 'GET',
+                data: { gameId: gameRoom1.GameId },
+                success: result => gameRoom1.currentPlayer = result
+            });
+
+        static updateStatus = () => {
+            gameRoom1.updateCurrenrPlayer()
+                .then(() => {
+                    console.log(gameRoom1.currentPlayer);
+                });
+        }
+
+    }
+
+    $().ready(() => {
+        gameRoom1.updateGameId();
+        gameRoom1.addPlayer();
+        setInterval(gameRoom1.updateStatus, 3000);
+    });
+
+    window.onbeforeunload = function () {
+        gameRoom1.removePlayer();
+    };
+
+</script>
+
+
+<style>
+    div.game-room1-container {
+        margin: auto;
+    }
+
+    div.game-room1-discription {
+        margin: 10px auto;
+    }
+
+    table.game-room1-table {
+        margin: 10px auto;
+    }
+
+    div.game-room1-move-1 {
+        text-align: center;
+        font-size: 24px;
+        color: green;
+    }
+
+    div.game-room1-move-2 {
+        text-align: center;
+        font-size: 24px;
+        color: blue;
+    }
+
+    div.game-room1-move-3 {
+        text-align: center;
+        font-size: 24px;
+        color: red;
+    }
+</style>

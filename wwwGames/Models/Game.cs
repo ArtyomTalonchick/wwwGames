@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace wwwGames.Models
 {
@@ -11,6 +10,14 @@ namespace wwwGames.Models
 
         public int GameNameId { get; set; }
         public GameName GameName { get; set; }
+
+        public int CurrentUserId { get; set; }
+        public ICollection<User> Users { get; set; }
+        public Game()
+        {
+            Users = new List<User>();
+            CurrentUserId = -1;
+        }
     }
 
     public class GameName

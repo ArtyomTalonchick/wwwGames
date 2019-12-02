@@ -41,7 +41,7 @@ namespace wwwGames.Controllers
         [Authorize(Roles = "teamLead")]
         public async Task<bool> Remove(int id)
         {
-            Game game= db.Games.FirstOrDefault(g => g.Id == id);
+            Game game = db.Games.FirstOrDefault(g => g.Id == id);
             if (game != null)
             {
                 db.Games.Remove(game);
@@ -97,6 +97,75 @@ namespace wwwGames.Controllers
         public ActionResult Create()
         {
             return PartialView("Create");
+        }
+
+        [HttpPut]
+        public async Task<bool> AddPlayer(int gameId)
+        {
+            User user = db.Users.Find(int.Parse(User.Identity.Name));
+            Game game = db.Games.Include(t => t.Users).FirstOrDefault(g => g.Id == gameId);
+            if (game.CurrentUserId == -1)
+            {
+                game.CurrentUserId = user.Id;
+            }
+            game.Users.Add(user);
+            await db.SaveChangesAsync();
+            return true;
+        }
+
+        [HttpGet]
+        public User GetCurrentPlayer(int gameId)
+        {
+            Game game = db.Games.Include(t => t.Users).FirstOrDefault(g => g.Id == gameId);
+            return db.Users.FirstOrDefault(u => u.Id == game.CurrentUserId);
+        }
+
+        [HttpPut]
+        public async Task<bool> NextStep(int gameId)
+        {
+            User user = db.Users.Find(int.Parse(User.Identity.Name));
+            Game game = db.Games.Include(t => t.Users).FirstOrDefault(g => g.Id == gameId);
+            List<User> users = game.Users.ToList();
+            int index = users.IndexOf(user);
+            int newIndex = index;
+            while (users[newIndex].TeamId == user.TeamId)
+            {
+                newIndex = (newIndex + 1) % users.Count;
+                if (newIndex == index)
+                {
+                    newIndex = -1;
+                    break;
+                }
+            }
+            game.CurrentUserId = newIndex;
+            await db.SaveChangesAsync();
+            return true;
+        }
+
+        [HttpPut]
+        public async Task<bool> RemovePlayer(int gameId)
+        {
+            User user = db.Users.Find(int.Parse(User.Identity.Name));
+            Game game = db.Games.Include(t => t.Users).FirstOrDefault(g => g.Id == gameId);
+            if(game.CurrentUserId == user.Id)
+            {
+                List<User> users = game.Users.ToList();
+                int index = users.IndexOf(user);
+                int newIndex = (index + 1) % users.Count;
+                while (users[newIndex].TeamId != user.TeamId)
+                {
+                    newIndex = (newIndex + 1) % users.Count;
+                    if (newIndex == index)
+                    {
+                        newIndex = -1;
+                        break;
+                    }
+                }
+                game.CurrentUserId = newIndex;
+            }
+            game.Users.Remove(user);
+            await db.SaveChangesAsync();
+            return true;
         }
     }
 }
