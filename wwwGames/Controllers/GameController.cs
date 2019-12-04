@@ -167,5 +167,11 @@ namespace wwwGames.Controllers
             await db.SaveChangesAsync();
             return true;
         }
+
+        // temp action
+        public IActionResult Hub()
+        {
+            return View();
+        }
     }
 }

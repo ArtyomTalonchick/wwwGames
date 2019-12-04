@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using wwwGames.Models;
+using wwwGames.SignalR;
 
 namespace wwwGames
 {
@@ -59,6 +59,8 @@ namespace wwwGames
                });
 
             services.AddMvc();
+
+            services.AddSignalR();
         }
 
 
@@ -88,7 +90,10 @@ namespace wwwGames
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
-
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<HubGame>("/gameHub");
+            });
             updateMVC(app);
         }
 
