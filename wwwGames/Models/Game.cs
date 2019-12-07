@@ -16,7 +16,6 @@ namespace wwwGames.Models
         public Game()
         {
             Users = new List<User>();
-            CurrentUserId = -1;
         }
     }
 

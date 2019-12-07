@@ -16,6 +16,9 @@ namespace wwwGames.Models
 
         public int TeamId { get; set; }
         public Team Team { get; set; }
+
+        //public int GameId { get; set; }
+        //public Game Game{ get; set; }
     }
 
     public class Role

@@ -28,8 +28,8 @@
 
     <div id="game-room1-active-block-1">
         <div class="game-room1-move-1">@Localizer["game.room1.move1"]</div>
-        <input type="text" maxlength="4" placeholder="@Localizer["game.room1.input"]" />
-        <button>@Localizer["game.room1.submit"]</button>
+        <input id="input-id" type="text" maxlength="4" placeholder="@Localizer["game.room1.input"]" />
+        <button id="submit-button-id">@Localizer["game.room1.submit"]</button>
     </div>
     <div id="game-room1-active-block-2" class="game-room1-move-2">
         @Localizer["game.room1.move2"]
@@ -40,54 +40,79 @@
 
 </div>
 
+<script src="~/lib/signalr/signalr.js"></script>
 
 <script type="text/javascript">
-    class gameRoom1{
+    class gameRoom1 {
 
-        static updateGameId = () => {
+        static onInit = () => {
+            gameRoom1.updateUser();
+
             const url_string = window.location.href;
             const url = new URL(url_string);
-            gameRoom1.GameId = url.searchParams.get('id');
+            gameRoom1.gameId = url.searchParams.get('id');
+
+            gameRoom1.connection = new signalR.HubConnectionBuilder().withUrl("/gameHub").build();
+
+            gameRoom1.connection.on("AddPlayer", gameRoom1.onAddPlayer);
+            gameRoom1.connection.on("RemovePlayer", gameRoom1.onRemovePlayer);
+            gameRoom1.connection.on("UpdateStep", gameRoom1.onUpdateStep);
+
+            gameRoom1.connection.start()
+                .then(console.log('start connection'))
+                .then(gameRoom1.addPlayer)
+                .catch(err => console.error(`start connetion was failed. ${err.toString()}`));
+
+            $('#submit-button-id').on('click', () => gameRoom1.onSubmit($('#input-id').val()));
         }
 
-        static addPlayer = () =>
-             $.ajax({
+        static updateUser = () =>
+            $.ajax({
                 cache: false,
-                url: '@Url.Action("AddPlayer", "Game")',
-                type: 'PUT',
-                data: { gameId: gameRoom1.GameId }
-            });
-
-        static removePlayer = () =>
-             $.ajax({
-                cache: false,
-                url: '@Url.Action("RemovePlayer", "Game")',
-                type: 'PUT',
-                data: { gameId: gameRoom1.GameId }
-            });
-
-        static updateCurrenrPlayer = () =>
-             $.ajax({
-                cache: false,
-                url: '@Url.Action("GetCurrentPlayer", "Game")',
+                url: '@Url.Action("GetUser", "User")',
                 type: 'GET',
-                data: { gameId: gameRoom1.GameId },
-                success: result => gameRoom1.currentPlayer = result
+                success: result => gameRoom1.user = result    
             });
 
-        static updateStatus = () => {
-            gameRoom1.updateCurrenrPlayer()
-                .then(() => {
-                    console.log(gameRoom1.currentPlayer);
-                });
+        static onAddPlayer = userId => {
+            console.log(`userId: ${userId} has been added`);
         }
 
+        static onRemovePlayer = userId => {
+            console.log(`userId: ${userId} has been removed`);
+        }
+
+        static onUpdateStep = (currentUserId, curretnTeamId, gameId, value) => {
+            console.log(`currentUserId: ${currentUserId}; curretnTeamId: ${curretnTeamId}; gameId: ${gameId}; value: ${value}`);
+            if (gameId.toString() !== gameRoom1.gameId) {
+                return;
+            }
+
+            $("#game-room1-active-block-1").css('visibility', 'hidden');
+            $("#game-room1-active-block-2").css('visibility', 'hidden');
+            $("#game-room1-active-block-3").css('visibility', 'hidden');
+            if (gameRoom1.user.id.toString() == currentUserId) {
+                $("#game-room1-active-block-1").css('visibility', 'visible');
+            } else if (gameRoom1.user.teamId.toString() == curretnTeamId) {
+                $("#game-room1-active-block-2").css('visibility', 'visible');
+            } else {
+                $("#game-room1-active-block-3").css('visibility', 'visible');
+            }
+
+        }
+
+        static addPlayer = () => gameRoom1.connection.invoke("AddPlayer", gameRoom1.gameId)
+            .catch(err => console.error(err.toString()));
+
+        static removePlayer = () => gameRoom1.connection.invoke("RemovePlayer", gameRoom1.gameId)
+            .catch(err => console.error(err.toString()));
+
+        static onSubmit = value => gameRoom1.connection.invoke("NextStep", gameRoom1.gameId, value)
+            .catch(err => console.error(err.toString()));
     }
 
     $().ready(() => {
-        gameRoom1.updateGameId();
-        gameRoom1.addPlayer();
-        setInterval(gameRoom1.updateStatus, 3000);
+        gameRoom1.onInit();
     });
 
     window.onbeforeunload = function () {
@@ -111,18 +136,21 @@
     }
 
     div.game-room1-move-1 {
+        visibility:hidden;
         text-align: center;
         font-size: 24px;
         color: green;
     }
 
     div.game-room1-move-2 {
+        visibility: hidden;
         text-align: center;
         font-size: 24px;
         color: blue;
     }
 
     div.game-room1-move-3 {
+        visibility: hidden;
         text-align: center;
         font-size: 24px;
         color: red;
