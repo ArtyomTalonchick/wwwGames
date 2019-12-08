@@ -1,0 +1,12 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> Localizer
+
+<span class="header">@Localizer["team.team.card"]</span>
+<img src="http://itd3.mycdn.me/image?id=870833799678&t=20&plc=WEB&tkn=*k-3-HsUx3lQEvaOG17U1VFWCM6w" style="width:200px">
+<div>
+    <span class="large">@Model.Name</span>
+    @{var parameters = new { teamId = Model.Id };}
+    <button onclick="location.href='@Url.Action("AllUsers", "User", parameters)'">
+        @Localizer["team.team.lookMore"]
+    </button>
+</div>

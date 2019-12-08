@@ -36,6 +36,9 @@
     <Content Update="Views\Game\List.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\Team\Components\TeamCard\TeamCard.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Team\TeamInfo.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
