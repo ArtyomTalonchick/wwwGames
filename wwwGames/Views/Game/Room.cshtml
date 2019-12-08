@@ -13,93 +13,117 @@
                 <td>@Localizer["game.room1."]</td>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td>32432</td>
-                <td>efdsfds</td>
-            </tr>
-            <tr>
-                <td>32432</td>
-                <td>efdsfds</td>
-            </tr>
-
-        </tbody>
+        <tbody id="game-room1-table-body"></tbody>
     </table>
 
-    <div id="game-room1-active-block-1">
-        <div class="game-room1-move-1">@Localizer["game.room1.move1"]</div>
-        <input id="input-id" type="text" maxlength="4" placeholder="@Localizer["game.room1.input"]" />
-        <button id="submit-button-id">@Localizer["game.room1.submit"]</button>
-    </div>
-    <div id="game-room1-active-block-2" class="game-room1-move-2">
-        @Localizer["game.room1.move2"]
-    </div>
-    <div id="game-room1-active-block-3" class="game-room1-move-3">
-        @Localizer["game.room1.move3"]
+    <div id="game-room1-active-block">
+        <div id="game-room1-active-block-1">
+            @Localizer["game.room1.activeBlock.1"]
+            <br />
+            <input id="game-room1-input-id" type="text" maxlength="4" placeholder="@Localizer["game.room1.input"]" />
+            <button id="game-room1-submit-button-id">@Localizer["game.room1.submit"]</button>
+            <br />
+            <div id="game-room1-error-container">
+            </div>
+        </div>
+        <div id="game-room1-active-block-2">
+            @Localizer["game.room1.activeBlock.2"]
+        </div>
+        <div id="game-room1-active-block-3">
+            @Localizer["game.room1.activeBlock.3"]
+        </div>
     </div>
 
-</div>
+    <div id="game-room1-result-block">
+        <div id="game-room1-result-block-1">
+            @Localizer["game.room1.resultBlock.1"]
+        </div>
+        <div id="game-room1-result-block-2">
+            @Localizer["game.room1.resultBlock.2"]
+        </div>
+    </div>
 
-<script src="~/lib/signalr/signalr.js"></script>
+    <script src="~/lib/signalr/signalr.js"></script>
 
-<script type="text/javascript">
+    <script type="text/javascript">
     class gameRoom1 {
+
+        static user = {};
+        static gameId = -1;
+        static connection = undefined;
+        static currentUser = {};
+        static steps = [];
 
         static onInit = () => {
             gameRoom1.updateUser();
 
             const url_string = window.location.href;
             const url = new URL(url_string);
-            gameRoom1.gameId = url.searchParams.get('id');
+            gameRoom1.gameId = parseInt(url.searchParams.get('id'));
 
             gameRoom1.connection = new signalR.HubConnectionBuilder().withUrl("/gameHub").build();
 
-            gameRoom1.connection.on("AddPlayer", gameRoom1.onAddPlayer);
-            gameRoom1.connection.on("RemovePlayer", gameRoom1.onRemovePlayer);
             gameRoom1.connection.on("UpdateStep", gameRoom1.onUpdateStep);
+            gameRoom1.connection.on("ShareSteps", gameRoom1.onShareSteps);
+            gameRoom1.connection.on("UpdateSteps", gameRoom1.onUpdateSteps);
+            gameRoom1.connection.on("UpdateResult", gameRoom1.onUpdateResult);
 
             gameRoom1.connection.start()
                 .then(console.log('start connection'))
                 .then(gameRoom1.addPlayer)
                 .catch(err => console.error(`start connetion was failed. ${err.toString()}`));
 
-            $('#submit-button-id').on('click', () => gameRoom1.onSubmit($('#input-id').val()));
-        }
+            $('#game-room1-submit-button-id').on('click', () => gameRoom1.onSubmit($('#game-room1-input-id').val()));
+        };
 
         static updateUser = () =>
             $.ajax({
                 cache: false,
                 url: '@Url.Action("GetUser", "User")',
                 type: 'GET',
-                success: result => gameRoom1.user = result    
+                success: result => gameRoom1.user = result
             });
 
-        static onAddPlayer = userId => {
-            console.log(`userId: ${userId} has been added`);
-        }
+        static onUpdateStep = (gameId, currentUser, value) => {
+            if (gameId !== gameRoom1.gameId) return;
 
-        static onRemovePlayer = userId => {
-            console.log(`userId: ${userId} has been removed`);
-        }
-
-        static onUpdateStep = (currentUserId, curretnTeamId, gameId, value) => {
-            console.log(`currentUserId: ${currentUserId}; curretnTeamId: ${curretnTeamId}; gameId: ${gameId}; value: ${value}`);
-            if (gameId.toString() !== gameRoom1.gameId) {
-                return;
+            if (value) {
+                gameRoom1.steps.push(value);
+                gameRoom1.updateTableOfStep();
             }
 
+            gameRoom1.currentUser = currentUser;
             $("#game-room1-active-block-1").css('visibility', 'hidden');
             $("#game-room1-active-block-2").css('visibility', 'hidden');
             $("#game-room1-active-block-3").css('visibility', 'hidden');
-            if (gameRoom1.user.id.toString() == currentUserId) {
+            if (gameRoom1.user.id === currentUser.id) {
                 $("#game-room1-active-block-1").css('visibility', 'visible');
-            } else if (gameRoom1.user.teamId.toString() == curretnTeamId) {
+            } else if (gameRoom1.user.teamId === currentUser.teamId) {
                 $("#game-room1-active-block-2").css('visibility', 'visible');
             } else {
                 $("#game-room1-active-block-3").css('visibility', 'visible');
             }
 
-        }
+        };
+
+        static onShareSteps = userId => gameRoom1.connection.invoke("TransferSteps", userId, gameRoom1.steps)
+            .catch(err => console.error(err.toString()));
+
+        static onUpdateSteps = steps => gameRoom1.updateTableOfStep(steps);
+
+        static onUpdateResult = (gameId, teamId, answer) => {
+            if (gameId !== gameRoom1.gameId) return;
+
+            $('#game-room1-active-block').remove();
+            $('#game-room1-result-block').css('visibility', 'visible');
+            if (gameRoom1.user.teamId === teamId) {
+                $("#game-room1-result-block-1").css('visibility', 'visible');
+            } else {
+                $("#game-room1-result-block-2").css('visibility', 'visible');
+            }
+            $('#game-room1-result-block').append(`@Localizer["game.room1.answer.before"]${answer}`);
+
+        };
 
         static addPlayer = () => gameRoom1.connection.invoke("AddPlayer", gameRoom1.gameId)
             .catch(err => console.error(err.toString()));
@@ -107,8 +131,61 @@
         static removePlayer = () => gameRoom1.connection.invoke("RemovePlayer", gameRoom1.gameId)
             .catch(err => console.error(err.toString()));
 
-        static onSubmit = value => gameRoom1.connection.invoke("NextStep", gameRoom1.gameId, value)
-            .catch(err => console.error(err.toString()));
+        static onSubmit = value => {
+            $('#game-room1-submit-button-id').val('');
+            const errorContainer = $('#game-room1-error-container');
+            errorContainer.html('');
+            switch (gameRoom1.getErrorFromValue(value)) {
+                case 1:
+                    errorContainer.html('@Localizer["game.room1.error.1"]');
+                    break;
+                case 2:
+                    errorContainer.html('@Localizer["game.room1.error.2"]');
+                    break;
+                case 3:
+                    errorContainer.html('@Localizer["game.room1.error.3"]');
+                    break;
+                case -1:
+                    gameRoom1.connection.invoke("NextStep", gameRoom1.gameId, value)
+                        .catch(err => console.error(err.toString()));
+                    break;
+            }
+        }
+
+        static updateTableOfStep = steps => {
+            if (steps) {
+                gameRoom1.steps = steps;
+            }
+
+            const tableBody = $('#game-room1-table-body');
+            tableBody.html('');
+            gameRoom1.steps.forEach(step => tableBody.append(`
+                    <tr>
+                        <td>${step.value}</td>
+                        <td>${step.result}</td>
+                    </tr>
+            `));
+
+        };
+
+        static getErrorFromValue = value => {
+            let result = -1;
+            if (value.length !== 4) {
+                result = 1;
+            }
+            const array = value.split('');
+            array.forEach(v => {
+                if (["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].indexOf(v) === -1) {
+                    result = 2;
+                }
+            });
+            array.forEach((v1, i1) => array.forEach((v2, i2) => {
+                if (i1 !== i2 && v1 === v2) {
+                    result = 3;
+                }
+            }));
+            return result;
+        };
     }
 
     $().ready(() => {
@@ -119,40 +196,64 @@
         gameRoom1.removePlayer();
     };
 
-</script>
+    </script>
 
 
-<style>
-    div.game-room1-container {
-        margin: auto;
-    }
+    <style>
+        div.game-room1-container {
+            margin: auto;
+        }
 
-    div.game-room1-discription {
-        margin: 10px auto;
-    }
+        div.game-room1-discription {
+            margin: 10px auto;
+        }
 
-    table.game-room1-table {
-        margin: 10px auto;
-    }
+        table.game-room1-table {
+            margin: 10px auto;
+        }
 
-    div.game-room1-move-1 {
-        visibility:hidden;
-        text-align: center;
-        font-size: 24px;
-        color: green;
-    }
+        #game-room1-active-block-1 {
+            visibility: hidden;
+            text-align: center;
+            font-size: 24px;
+            color: green;
+        }
 
-    div.game-room1-move-2 {
-        visibility: hidden;
-        text-align: center;
-        font-size: 24px;
-        color: blue;
-    }
+        #game-room1-active-block-2 {
+            visibility: hidden;
+            text-align: center;
+            font-size: 24px;
+            color: blue;
+        }
 
-    div.game-room1-move-3 {
-        visibility: hidden;
-        text-align: center;
-        font-size: 24px;
-        color: red;
-    }
-</style>
+        #game-room1-active-block-3 {
+            visibility: hidden;
+            text-align: center;
+            font-size: 24px;
+            color: red;
+        }
+
+        #game-room1-error-container {
+            text-align: center;
+            font-size: 14px;
+            font-style: italic;
+            color: red;
+        }
+
+        #game-room1-result-block {
+            visibility: hidden;
+        }
+
+        #game-room1-result-block-1 {
+            visibility: hidden;
+            text-align: center;
+            font-size: 24px;
+            color: green;
+        }
+        #game-room1-result-block-2 {
+            visibility: hidden;
+            text-align: center;
+            font-size: 24px;
+            color: red;
+        }
+    </style>
