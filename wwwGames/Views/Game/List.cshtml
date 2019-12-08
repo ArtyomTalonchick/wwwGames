@@ -39,7 +39,7 @@
                         table.append(`<tr>
                             <td><a href="/Game/Room?id=${item.id}">${item.gameName.name}</a></td>
                             <td><a href="/Team/Team/${item.team2Id}">${item.team2Id}</a></td>
-                            <td><button onClick="gameList.onRemove(${item.id})">@Localizer["game.list.game"]</button></td>
+                            <td><button onClick="gameList.onRemove(${item.id})">@Localizer["game.list.remove"]</button></td>
                         </tr>`)
                     );
                 })

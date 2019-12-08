@@ -153,6 +153,63 @@
   <data name="account.register.label.password2" xml:space="preserve">
     <value>Повторите пароль</value>
   </data>
+  <data name="game.create.create" xml:space="preserve">
+    <value>Создать</value>
+  </data>
+  <data name="game.list.action" xml:space="preserve">
+    <value>Действие</value>
+  </data>
+  <data name="game.list.game" xml:space="preserve">
+    <value>Название игры</value>
+  </data>
+  <data name="game.list.remove" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="game.list.team" xml:space="preserve">
+    <value>Противник</value>
+  </data>
+  <data name="game.room1.activeBlock.1" xml:space="preserve">
+    <value>Ваш ход...</value>
+  </data>
+  <data name="game.room1.activeBlock.2" xml:space="preserve">
+    <value>Ваша команда ходит)</value>
+  </data>
+  <data name="game.room1.activeBlock.3" xml:space="preserve">
+    <value>Ходит противник(</value>
+  </data>
+  <data name="game.room1.answer.before" xml:space="preserve">
+    <value>Правильный ответ: </value>
+  </data>
+  <data name="game.room1.discription" xml:space="preserve">
+    <value>Компьютер задумывает четыре различные цифры из 0,1,2,...9. Игрок делает ходы, чтобы узнать эти цифры и их порядок. Каждый ход состоит из четырёх цифр, 0 может стоять на первом месте. В ответ компьютер показывает число отгаданных цифр, стоящих на своих местах (число быков) и число отгаданных цифр, стоящих не на своих местах (число коров). Выигрывает команда, первая отгадавшая все цифры и их порядок.</value>
+  </data>
+  <data name="game.room1.error.1" xml:space="preserve">
+    <value>Должно быть 4 цифры</value>
+  </data>
+  <data name="game.room1.error.2" xml:space="preserve">
+    <value>Можно использовать только цифры</value>
+  </data>
+  <data name="game.room1.error.3" xml:space="preserve">
+    <value>Цифры не могут повторятся</value>
+  </data>
+  <data name="game.room1.input" xml:space="preserve">
+    <value>Ваше число?</value>
+  </data>
+  <data name="game.room1.resultBlock.1" xml:space="preserve">
+    <value>Ваша команда победила!!!</value>
+  </data>
+  <data name="game.room1.resultBlock.2" xml:space="preserve">
+    <value>Вы проиграли...</value>
+  </data>
+  <data name="game.room1.step.result" xml:space="preserve">
+    <value>Результат</value>
+  </data>
+  <data name="game.room1.step.value" xml:space="preserve">
+    <value>Ход</value>
+  </data>
+  <data name="game.room1.submit" xml:space="preserve">
+    <value>Отправить</value>
+  </data>
   <data name="header.allTeams" xml:space="preserve">
     <value>Все Команды</value>
   </data>

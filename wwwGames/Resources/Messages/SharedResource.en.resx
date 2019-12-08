@@ -153,6 +153,63 @@
   <data name="account.register.label.password2" xml:space="preserve">
     <value>Confirm password</value>
   </data>
+  <data name="game.create.create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="game.list.action" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="game.list.game" xml:space="preserve">
+    <value>Game Name</value>
+  </data>
+  <data name="game.list.remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="game.list.team" xml:space="preserve">
+    <value>Rival</value>
+  </data>
+  <data name="game.room1.activeBlock.1" xml:space="preserve">
+    <value>Your turn...</value>
+  </data>
+  <data name="game.room1.activeBlock.2" xml:space="preserve">
+    <value>Your team is walking)</value>
+  </data>
+  <data name="game.room1.activeBlock.3" xml:space="preserve">
+    <value>The enemy walks (</value>
+  </data>
+  <data name="game.room1.answer.before" xml:space="preserve">
+    <value>Correct answer: </value>
+  </data>
+  <data name="game.room1.discription" xml:space="preserve">
+    <value>The computer concocts four different numbers from 0,1,2, ... 9. The player makes moves to find out these numbers and their order. Each move consists of four numbers, 0 can be in the first place. In response, the computer shows the number of guessed numbers that are in their places (the number of bulls) and the number of guessed numbers that are not in their places (the number of cows). The team that first guessed all the numbers and their order wins.</value>
+  </data>
+  <data name="game.room1.error.1" xml:space="preserve">
+    <value>Must be 4 digits</value>
+  </data>
+  <data name="game.room1.error.2" xml:space="preserve">
+    <value>Only numbers can be used</value>
+  </data>
+  <data name="game.room1.error.3" xml:space="preserve">
+    <value>The numbers cannot be repeated</value>
+  </data>
+  <data name="game.room1.input" xml:space="preserve">
+    <value>Your number</value>
+  </data>
+  <data name="game.room1.resultBlock.1" xml:space="preserve">
+    <value>Your team won !!!</value>
+  </data>
+  <data name="game.room1.resultBlock.2" xml:space="preserve">
+    <value>You lose...</value>
+  </data>
+  <data name="game.room1.step.result" xml:space="preserve">
+    <value>Result</value>
+  </data>
+  <data name="game.room1.step.value" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="game.room1.submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
   <data name="header.allTeams" xml:space="preserve">
     <value>All Teams</value>
   </data>

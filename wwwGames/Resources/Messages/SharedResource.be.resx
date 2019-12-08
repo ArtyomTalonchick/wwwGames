@@ -153,6 +153,63 @@
   <data name="account.register.label.password2" xml:space="preserve">
     <value>Паўтарыце Пароль</value>
   </data>
+  <data name="game.create.create" xml:space="preserve">
+    <value>Стварыць</value>
+  </data>
+  <data name="game.list.action" xml:space="preserve">
+    <value>Дзеянне</value>
+  </data>
+  <data name="game.list.game" xml:space="preserve">
+    <value>Назва гульні</value>
+  </data>
+  <data name="game.list.remove" xml:space="preserve">
+    <value>Выдаліць</value>
+  </data>
+  <data name="game.list.team" xml:space="preserve">
+    <value>Супернік</value>
+  </data>
+  <data name="game.room1.activeBlock.1" xml:space="preserve">
+    <value>Ваш ход...</value>
+  </data>
+  <data name="game.room1.activeBlock.2" xml:space="preserve">
+    <value>Ваша каманда ходзіць)</value>
+  </data>
+  <data name="game.room1.activeBlock.3" xml:space="preserve">
+    <value>Ходзіць праціўнік (</value>
+  </data>
+  <data name="game.room1.answer.before" xml:space="preserve">
+    <value>Правільны адказ: </value>
+  </data>
+  <data name="game.room1.discription" xml:space="preserve">
+    <value>Кампутар задумвае чатыры розныя лічбы з 0,1,2, ... 9. Гулец робіць хады, каб даведацца гэтыя лічбы і іх парадак. Кожны ход складаецца з чатырох лічбаў, 0 можа стаяць на першым месцы. У адказ кампутар паказвае лік Отгадайте лічбаў, якія стаяць на сваіх месцах (лік быкоў) і лік Отгадайте лічбаў, якія стаяць не на сваіх месцах (лік кароў). Выйграе каманда, першая Отгадайте ўсе лічбы і іх парадак.</value>
+  </data>
+  <data name="game.room1.error.1" xml:space="preserve">
+    <value>Павінна быць 4 лічбы</value>
+  </data>
+  <data name="game.room1.error.2" xml:space="preserve">
+    <value>Можна выкарыстоўваць толькі лічбы</value>
+  </data>
+  <data name="game.room1.error.3" xml:space="preserve">
+    <value>Лічбы не могуць паўторацца</value>
+  </data>
+  <data name="game.room1.input" xml:space="preserve">
+    <value>Ваша лiчба?</value>
+  </data>
+  <data name="game.room1.resultBlock.1" xml:space="preserve">
+    <value>Ваша каманда перамагла !!!</value>
+  </data>
+  <data name="game.room1.resultBlock.2" xml:space="preserve">
+    <value>Вы прайгралі ...</value>
+  </data>
+  <data name="game.room1.step.result" xml:space="preserve">
+    <value>Вынік</value>
+  </data>
+  <data name="game.room1.step.value" xml:space="preserve">
+    <value>Ход</value>
+  </data>
+  <data name="game.room1.submit" xml:space="preserve">
+    <value>Адправіць</value>
+  </data>
   <data name="header.allTeams" xml:space="preserve">
     <value>Усе Каманды</value>
   </data>
