@@ -4,8 +4,8 @@
 <div class="game-room1-discription">
     @Localizer["game.room1.discription"]
 </div>
-<div class="game-room1-container">
 
+<div class="game-room1-container">
     <table class="game-room1-table">
         <thead>
             <tr>
@@ -73,7 +73,7 @@
                 .then(gameRoom1.addPlayer)
                 .catch(err => console.error(`start connetion was failed. ${err.toString()}`));
 
-            $('#game-room1-submit-button-id').on('click', () => gameRoom1.onSubmit($('#game-room1-input-id').val()));
+            $('#game-room1-submit-button-id').on('click', () => gameRoom1.onSubmit());
         };
 
         static updateUser = () =>
@@ -131,8 +131,9 @@
         static removePlayer = () => gameRoom1.connection.invoke("RemovePlayer", gameRoom1.gameId)
             .catch(err => console.error(err.toString()));
 
-        static onSubmit = value => {
-            $('#game-room1-submit-button-id').val('');
+        static onSubmit = () => {
+            const value = $('#game-room1-input-id').val();
+            $('#game-room1-input-id').val('');
             const errorContainer = $('#game-room1-error-container');
             errorContainer.html('');
             switch (gameRoom1.getErrorFromValue(value)) {
@@ -162,7 +163,12 @@
             gameRoom1.steps.forEach(step => tableBody.append(`
                     <tr>
                         <td>${step.value}</td>
-                        <td>${step.result}</td>
+                        <td>
+                            ${step.result[0]}
+                            <img src="/Images/Bull.png"/ class="game-room1-img">
+                            ${step.result[1]}
+                            <img src="/Images/Cow.png"/ class="game-room1-img">
+                        </td>
                     </tr>
             `));
 
@@ -250,10 +256,17 @@
             font-size: 24px;
             color: green;
         }
+
         #game-room1-result-block-2 {
             visibility: hidden;
             text-align: center;
             font-size: 24px;
             color: red;
+        }
+
+        img.game-room1-img {
+            width: 25px;
+            border-radius: 10px;
+            margin: 1px;
         }
     </style>
